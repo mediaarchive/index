@@ -62,19 +62,24 @@ function get_styles(){
     return str;
 }
 
-exports.start = function(data, json_path){
+exports.json_generate = function(filename, data){
+    console.log('generating json');
+
+    if (fs.existsSync(filename))
+        fs.unlinkSync(filename);
+
+    fs.writeFileSync(filename, JSON.stringify(data));
+};
+
+exports.html_generate = function(filename, data){
+    console.log('generating html');
+
     if (fs.existsSync(global.config.result_file))
         fs.unlinkSync(global.config.result_file);
-    
-    if (fs.existsSync('../index.json')) 
-        fs.unlinkSync('../index.json');    
-    
-    console.log('rendering');
-    fs.writeFileSync('../index.json', JSON.stringify(data));
-    
+
     var template = Handlebars.compile(fs.readFileSync('templates/main.html').toString());
-    
-    fs.writeFileSync(global.config.result_file, template({
+
+    fs.writeFileSync(filename, template({
         assets_dir: global.config.html_assets_dir,
         archive_dir: global.config.html_archive_dir,
         events: data,
@@ -83,4 +88,10 @@ exports.start = function(data, json_path){
         scripts_raw: get_scripts(),
         styles_raw: get_styles()
     }));
-}
+};
+
+exports.start = function(data){
+    console.log('rendering');
+    exports.json_generate('../index.json', data);
+    exports.html_generate(global.config.result_file, data);
+};
