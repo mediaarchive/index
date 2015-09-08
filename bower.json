@@ -1,0 +1,27 @@
+{
+  "name": "mediaarchiveindex",
+  "version": "0.0.0",
+  "homepage": "https://github.com/atnartur/mediaarchiveindex",
+  "authors": [
+    "atnartur"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.5",
+    "bootstrap-calendar": "~0.2.4",
+    "bower": "*",
+    "datatables": "~1.10.9",
+    "font-awesome": "~4.4.0",
+    "install": "~1.0.4",
+    "jquery": "~2.1.4",
+    "jquery_lazyload": "jquery.lazyload#~1.9.7",
+    "underscore": "~1.8.3"
+  }
+}

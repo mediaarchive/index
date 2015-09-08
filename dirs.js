@@ -1,4 +1,5 @@
 var fs = require('fs');
+var path = require('path');
 
 function dir_is_year(dir_name){
     if (dir_name != NaN && dir_name.length === 4) 
@@ -53,6 +54,9 @@ exports.start = function(){
                 var events = fs.readdirSync(global.config.archive_dir + '/' + year + '/' + month + '/' + day);
                 
                 events.forEach(function(event){
+                    if (event == '.' || event == '..')
+                        return false;
+                    
                     if(!fs.lstatSync(global.config.archive_dir + '/' + year + '/' + month + '/' + day + '/' + event).isDirectory()){
                         console.log('Error: dir "' + year + '/' + month + '/' + day + '/' + event + '" not event dir');
                         return false;
@@ -65,15 +69,39 @@ exports.start = function(){
                             month: month,
                             year: year
                         },
-                        photos: false
+                        photos: false,
+                        preview_photo: '',
+                        dir: year + '/' + month + '/' + day + '/' + event
                     }
                     
                     if(fs.existsSync(global.config.archive_dir + '/' + year + '/' + month + '/' + day + '/' + event + '/фото'))
                         event_res.photos = true;
                     
+                    var files = fs.readdirSync(global.config.archive_dir + '/' + year + '/' + month + '/' + day + '/' + event);
+                    
+                    files.forEach(function(file){
+                        if (file == '.' || file == '..')
+                            return false;
+                        
+                        var ext = path.extname(file).toLowerCase().replace('.', '');
+                        
+                        if (ext == 'jpg' || ext == 'jpeg' || ext == 'gif' || ext == 'png') {
+                            event_res.preview_photo = file;
+                            return true;
+                        }
+                        
+                        return true;
+                    });
+                    
                     result.push(event_res);
+                    
+                    return true;
                 });
-            })
+                
+                return true;
+            });
+            
+            return true;
         });
         
         return true;
