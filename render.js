@@ -65,21 +65,23 @@ function get_styles(){
 exports.json_generate = function(filename, data){
     console.log('generating json');
 
-    if (fs.existsSync(filename))
-        fs.unlinkSync(filename);
+    var json = JSON.stringify(data);
 
-    fs.writeFileSync(filename, JSON.stringify(data));
+    if(filename !== false) { // если файл указан - генерируем его
+        if (fs.existsSync(filename))
+            fs.unlinkSync(filename);
+
+        fs.writeFileSync(filename, json);
+    }
+    else // если не указан - просто возвращаем json
+        return json;
 };
 
 exports.html_generate = function(filename, data){
     console.log('generating html');
 
-    if (fs.existsSync(global.config.result_file))
-        fs.unlinkSync(global.config.result_file);
-
     var template = Handlebars.compile(fs.readFileSync('templates/main.html').toString());
-
-    fs.writeFileSync(filename, template({
+    var html = template({
         assets_dir: global.config.html_assets_dir,
         archive_dir: global.config.html_archive_dir,
         events: data,
@@ -87,7 +89,16 @@ exports.html_generate = function(filename, data){
         calendar_templates: calendar_templates(),
         scripts_raw: get_scripts(),
         styles_raw: get_styles()
-    }));
+    });
+
+    if(filename !== false) { // если файл указан - генерируем его
+        if (fs.existsSync(filename))
+            fs.unlinkSync(filename);
+
+        fs.writeFileSync(filename, html);
+    }
+    else // если не указан - просто возвращаем html
+        return html;
 };
 
 exports.start = function(data){
