@@ -38,7 +38,7 @@ function calendar_templates() {
     
     list.forEach(function(val){
         str += '<script type="text/x-handlebars-template" id="' + val + '_calendar_template">' +
-                    fs.readFileSync('assets/js/libs/bootstrap.calendar/bootstrap_calendar_tmpls/' + val + '.html').toString() +
+                    fs.readFileSync('assets/libs/bootstrap_calendar_tmpls/' + val + '.html').toString() +
                 '</script>';
         
     });
