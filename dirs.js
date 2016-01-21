@@ -23,7 +23,7 @@ exports.start = function(base_dir){
     var years = fs.readdirSync(base_dir);
     
     years.forEach(function(year){ // цикл по годам
-        if (year == '.' || year == '..')
+        if (year == '.' || year == '..' || year == 'desktop.ini' || year == 'Thumbs.db')
             return;
         
         if (!dir_is_year(year)) { // если это не год
@@ -34,7 +34,7 @@ exports.start = function(base_dir){
         var months = fs.readdirSync(base_dir + '/' + year); 
         
         months.forEach(function(month){
-            if (month == '.' || month == '..')
+            if (month == '.' || month == '..' || month == 'desktop.ini' || month == 'Thumbs.db')
                 return;
             
             if (!dir_is_month_or_day(month)) { // если это не месяц
@@ -45,7 +45,7 @@ exports.start = function(base_dir){
             var days = fs.readdirSync(base_dir + '/' + year + '/' + month);
             
             days.forEach(function(day){
-                if (day == '.' || day == '..')
+                if (day == '.' || day == '..' || day == 'desktop.ini' || day == 'Thumbs.db')
                     return;
                 
                 if (!dir_is_month_or_day(day)) { // если это не месяц
@@ -56,7 +56,7 @@ exports.start = function(base_dir){
                 var events = fs.readdirSync(base_dir + '/' + year + '/' + month + '/' + day);
                 
                 events.forEach(function(event){
-                    if (event == '.' || event == '..')
+                    if (event == '.' || event == '..'  || day == 'desktop.ini' || day == 'Thumbs.db')
                         return;
                     
                     if(!fs.lstatSync(base_dir + '/' + year + '/' + month + '/' + day + '/' + event).isDirectory()){
@@ -82,7 +82,7 @@ exports.start = function(base_dir){
                     var files = fs.readdirSync(base_dir + '/' + year + '/' + month + '/' + day + '/' + event);
                     
                     files.forEach(function(file){
-                        if (file == '.' || file == '..')
+                        if (file == '.' || file == '..' || day == 'desktop.ini' || day == 'Thumbs.db')
                             return;
                         
                         var ext = path.extname(file).toLowerCase().replace('.', '');
