@@ -35,17 +35,6 @@
                             {{#each events}}
                                 <tr>
                                     <td>
-                                        {{#if preview_photo}}
-                                            <a href="{{../../archive_dir}}/{{dir}}/{{preview_photo}}" target="_blank">
-                                                <img width="100" class="lazy" src="{{../../archive_dir}}/{{dir}}/{{preview_photo}}"/>
-                                            </a>
-                                        {{else}}
-                                            <div class="well" width="50">
-                                                <i class="fa fa-file-photo-o fa-2x" style="text-align:center;"></i>
-                                            </div>
-                                        {{/if}}
-                                    </td>
-                                    <td>
                                         <h3>{{name}}</h3>
                                     </td>
                                     <td>
