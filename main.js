@@ -1,3 +1,4 @@
 module.exports = {
-    dirs: require('./dirs')
+    dirs: require('./dirs'),
+    render: require('./render')
 }
